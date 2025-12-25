@@ -1,0 +1,46 @@
+# version: "3.9"
+
+services:
+  api:
+    image: natley30/api
+    container_name: api
+    ports:
+    - "5000:5000"
+    restart: always
+
+  web:
+    image: natley30/web
+    container_name: web
+    ports:
+    - "8501:8501"
+    environment:
+    - API_URL=http://api:5000/predict
+    depends_on:
+    - api
+    restart: always
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana-provisioning:/etc/grafana/provisioning
+    restart: unless-stopped
+
+volumes:
+  grafana-storage:

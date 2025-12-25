@@ -1,0 +1,17 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Instalar dependencias
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiamos la API
+COPY web/api.py ./api.py
+
+# Copiamos el modelo (ruta relativa)
+COPY models/model.pkl ./models/model.pkl
+
+EXPOSE 5000
+
+CMD ["python", "api.py"]
