@@ -21,7 +21,7 @@ from sklearn.metrics import (
     recall_score,
     roc_auc_score,
     mean_absolute_error,
-    mean_squared_error,
+    root_mean_squared_error,
     f1_score
 )
 
@@ -103,7 +103,7 @@ def train_model(n_estimators, threshold):
         recall = recall_score(y_test, y_pred)
         roc_auc = roc_auc_score(y_test, y_proba)
         mae = mean_absolute_error(y_test, y_pred)
-        rmse = mean_squared_error(y_test, y_pred, squared=False)
+        rmse = root_mean_squared_error(y_test, y_pred)
         f1 = f1_score(y_test, y_pred)
 
         joblib.dump(pipeline, MODEL_PATH)
