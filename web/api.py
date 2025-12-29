@@ -2,15 +2,15 @@ import joblib
 import os
 import pandas as pd
 from flask import Flask, request, jsonify, Response
-from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
+# from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
 
 
 MODEL_PATH = "models/model.pkl"
 
-WEB_PREDICTION_COUNTER = Counter(
-    "web_prediction_requests_total",
-    "Number of prediction requests made from the web UI"
-)
+# WEB_PREDICTION_COUNTER = Counter(
+#     "web_prediction_requests_total",
+#     "Number of prediction requests made from the web UI"
+# )
 
 
 def load_model():
@@ -25,9 +25,9 @@ except FileNotFoundError:
 
 app = Flask(__name__)
 
-@app.route('/metrics')
-def metrics():
-    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+# @app.route('/metrics')
+# def metrics():
+#     return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 
 @app.route("/health", methods=["GET"])
 def health():
@@ -36,7 +36,7 @@ def health():
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    WEB_PREDICTION_COUNTER.inc()
+    # WEB_PREDICTION_COUNTER.inc()
     try:
         data = request.get_json()
         df = pd.DataFrame([data])

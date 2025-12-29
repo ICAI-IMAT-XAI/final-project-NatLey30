@@ -41,5 +41,7 @@ if submitted:
     if response.status_code == 200:
         result = response.json()
         st.success(f"Default probability: {result['default_probability']:.2%}")
+        decision = "NO" if result["default_prediction"] else "YES"
+        st.success(f"Loan approved: {decision}")
     else:
         st.error(response.text)

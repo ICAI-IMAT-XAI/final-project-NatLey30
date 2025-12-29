@@ -19,6 +19,8 @@ docker build -t natley30/web -f Dockerfile.web .
 docker-compose up
 ```
 
+4. Open: http://localhost:8501/
+
 ### Notes on Docker Images
 The Docker image names used (natley30/api and natley30/web) correspond to my Docker Hub account.
 
